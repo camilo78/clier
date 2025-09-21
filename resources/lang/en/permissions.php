@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'title' => 'Permissions',
+    'title_description' => 'Manage system permissions',
+    'create_permission' => 'Create Permission',
+    'edit_permission' => 'Edit Permission',
+    'delete_permission' => 'Delete Permission',
+    'name' => 'Name',
+    'description' => 'Description',
+    'guard_name' => 'Guard',
+    'permission_created' => 'Permission created successfully',
+    'permission_updated' => 'Permission updated successfully',
+    'permission_deleted' => 'Permission deleted successfully',
+    'permission_information' => 'Permission Information',
+    'permission_details' => 'Permission Details',
+    'roles_count' => 'Roles Count',
+    'users_count' => 'Users Count',
+    'created_at' => 'Created At',
+    'updated_at' => 'Updated At',
+    'you_are_about_to_delete' => 'You are about to delete this permission.',
+    'permission_name' => 'Permission Name',
+    'permission_description' => 'Permission Description',
+    'create_permission_description' => 'Create a new system permission',
+    'edit_permission_description' => 'Modify the permission information',
+    'update_permission' => 'Update Permission',
+];

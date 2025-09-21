@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'title' => 'Permisos',
+    'title_description' => 'Gestiona los permisos del sistema',
+    'create_permission' => 'Crear Permiso',
+    'edit_permission' => 'Editar Permiso',
+    'delete_permission' => 'Eliminar Permiso',
+    'name' => 'Nombre',
+    'description' => 'Descripción',
+    'guard_name' => 'Guard',
+    'permission_created' => 'Permiso creado exitosamente',
+    'permission_updated' => 'Permiso actualizado exitosamente',
+    'permission_deleted' => 'Permiso eliminado exitosamente',
+    'permission_information' => 'Información del Permiso',
+    'permission_details' => 'Detalles del Permiso',
+    'roles_count' => 'Número de Roles',
+    'users_count' => 'Número de Usuarios',
+    'created_at' => 'Fecha de Creación',
+    'updated_at' => 'Última Actualización',
+    'you_are_about_to_delete' => 'Estás a punto de eliminar este permiso.',
+    'permission_name' => 'Nombre del Permiso',
+    'permission_description' => 'Descripción del Permiso',
+    'create_permission_description' => 'Crea un nuevo permiso para el sistema',
+    'edit_permission_description' => 'Modifica la información del permiso',
+    'update_permission' => 'Actualizar Permiso',
+];
