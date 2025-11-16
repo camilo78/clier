@@ -4,6 +4,7 @@ return [
     // Main navigation
     'home' => 'Inicio',
     'dashboard' => 'Panel de Control',
+    'platform' => 'Plataforma',
     'admin' => 'Administración',
     'settings' => 'Configuración',
     'profile' => 'Perfil',

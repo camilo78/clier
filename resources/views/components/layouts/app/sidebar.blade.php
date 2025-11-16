@@ -20,9 +20,9 @@
     <!-- Navegación Principal -->
     <flux:navlist variant="outline">
         <!-- Dashboard -->
-        <flux:navlist.group heading="Platform" class="grid">
+        <flux:navlist.group heading="{{ __('navigation.platform') }}" class="grid">
             <flux:navlist.item icon="home" :href="route('admin.index')" :current="request()->routeIs('admin.index')">
-                Dashboard
+                {{ __('navigation.dashboard') }}
             </flux:navlist.item>
         </flux:navlist.group>
 
@@ -49,22 +49,18 @@
         
         <!-- Gestión de Contenido (CMS) -->
         @can('manage cms')
-            <flux:navlist.group heading="CMS" expandable :expanded="request()->routeIs('admin.cms.*')" class="grid">
-                <flux:navlist.item icon="building-office" :href="route('admin.cms.company-info')" :current="request()->routeIs('admin.cms.company-info')">
-                    Info. de la Empresa
-                </flux:navlist.item>
-                <flux:navlist.item icon="photo" :href="route('admin.cms.slides')" :current="request()->routeIs('admin.cms.slides')">
-                    Slides del Carousel
-                </flux:navlist.item>
-                <flux:navlist.item icon="cog" :href="route('admin.cms.services')" :current="request()->routeIs('admin.cms.services')">
-                    Servicios
-                </flux:navlist.item>
-                <flux:navlist.item icon="chat-bubble-left-right" :href="route('admin.cms.testimonials')" :current="request()->routeIs('admin.cms.testimonials.*')">
-                    Testimonios
-                </flux:navlist.item>
-
-
-            </flux:navlist.group>
+            <flux:navlist.item icon="building-office" :href="route('admin.cms.company-info')" :current="request()->routeIs('admin.cms.company-info')">
+                {{ __('cms.company_info') }}
+            </flux:navlist.item>
+            <flux:navlist.item icon="photo" :href="route('admin.cms.slides')" :current="request()->routeIs('admin.cms.slides')">
+                {{ __('cms.slides') }}
+            </flux:navlist.item>
+            <flux:navlist.item icon="cog" :href="route('admin.cms.services')" :current="request()->routeIs('admin.cms.services')">
+                {{ __('cms.services') }}
+            </flux:navlist.item>
+            <flux:navlist.item icon="chat-bubble-left-right" :href="route('admin.cms.testimonials')" :current="request()->routeIs('admin.cms.testimonials.*')">
+                {{ __('cms.testimonials') }}
+            </flux:navlist.item>
         @endcan
     </flux:navlist>
 

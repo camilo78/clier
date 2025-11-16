@@ -84,7 +84,13 @@ class Index extends Component
     public $quote_bg_image_1, $quote_bg_image_2;
     // Nuevas imágenes Quote para subida
     public $newQuoteBgImage1, $newQuoteBgImage2;
-    
+
+    // === SECCIÓN FACTS ===
+    public $facts_clients_count, $facts_clients_label;
+    public $facts_projects_count, $facts_projects_label;
+    public $facts_experts_count, $facts_experts_label;
+    public $facts_support_count, $facts_support_label;
+
     // === TOGGLES DE MÓDULOS ===
     /** @var bool Activar/desactivar carousel de slides */
     public $slides_enabled = true;
@@ -155,6 +161,14 @@ class Index extends Component
             'quote_description' => 'nullable|string',
             'quote_button_text' => 'nullable|string|max:255',
             'quote_button_url' => 'nullable|string|max:255',
+            'facts_clients_count' => 'nullable|string|max:255',
+            'facts_clients_label' => 'nullable|string|max:255',
+            'facts_projects_count' => 'nullable|string|max:255',
+            'facts_projects_label' => 'nullable|string|max:255',
+            'facts_experts_count' => 'nullable|string|max:255',
+            'facts_experts_label' => 'nullable|string|max:255',
+            'facts_support_count' => 'nullable|string|max:255',
+            'facts_support_label' => 'nullable|string|max:255',
         ]);
 
         // Procesar todos los archivos subidos y obtener sus rutas finales
@@ -189,6 +203,14 @@ class Index extends Component
             'quote_description' => $this->quote_description,
             'quote_button_text' => $this->quote_button_text,
             'quote_button_url' => $this->quote_button_url,
+            'facts_clients_count' => $this->facts_clients_count,
+            'facts_clients_label' => $this->facts_clients_label,
+            'facts_projects_count' => $this->facts_projects_count,
+            'facts_projects_label' => $this->facts_projects_label,
+            'facts_experts_count' => $this->facts_experts_count,
+            'facts_experts_label' => $this->facts_experts_label,
+            'facts_support_count' => $this->facts_support_count,
+            'facts_support_label' => $this->facts_support_label,
             'slides_enabled' => $this->slides_enabled,
             'services_enabled' => $this->services_enabled,
             'testimonials_enabled' => $this->testimonials_enabled,
