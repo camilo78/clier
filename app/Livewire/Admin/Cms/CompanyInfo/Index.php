@@ -90,6 +90,7 @@ class Index extends Component
     public $facts_projects_count, $facts_projects_label;
     public $facts_experts_count, $facts_experts_label;
     public $facts_support_count, $facts_support_label;
+    public $facts_bg_image, $newFactsBgImage;
 
     // === TOGGLES DE MÓDULOS ===
     /** @var bool Activar/desactivar carousel de slides */
@@ -258,6 +259,7 @@ class Index extends Component
             'features_image' => $this->newFeaturesImage ? $this->newFeaturesImage->store('features', 'public') : $this->features_image,
             'quote_bg_image_1' => $this->newQuoteBgImage1 ? $this->newQuoteBgImage1->store('quote', 'public') : $this->quote_bg_image_1,
             'quote_bg_image_2' => $this->newQuoteBgImage2 ? $this->newQuoteBgImage2->store('quote', 'public') : $this->quote_bg_image_2,
+            'facts_bg_image' => $this->newFactsBgImage ? $this->newFactsBgImage->store('facts', 'public') : $this->facts_bg_image,
         ];
     }
 
@@ -297,6 +299,7 @@ class Index extends Component
         $this->newFeaturesImage = null;
         $this->newQuoteBgImage1 = null;
         $this->newQuoteBgImage2 = null;
+        $this->newFactsBgImage = null;
     }
 
     #[Layout('components.layouts.admin')]

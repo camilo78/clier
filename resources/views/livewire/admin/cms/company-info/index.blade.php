@@ -376,54 +376,135 @@
         </div>
 
         {{-- Sección Facts --}}
-        <div class="space-y-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {{-- Fact 1: Clientes --}}
-                <div class="space-y-3 p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800/50">
-                    <h4 class="font-medium text-gray-900 dark:text-gray-100 flex items-center gap-2">
-                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {{-- Fact 1: Clientes --}}
+            <div class="relative overflow-hidden rounded-xl border border-blue-200 dark:border-blue-800 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 p-4 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex flex-col items-center text-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-blue-600 dark:bg-blue-500 flex items-center justify-center shadow-lg">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
-                        Clientes Satisfechos
-                    </h4>
-                    <flux:input wire:model="facts_clients_count" label="Número" placeholder="1234" />
-                    <flux:input wire:model="facts_clients_label" label="Etiqueta" placeholder="Clientes Satisfechos" />
+                    </div>
+                    <h4 class="font-semibold text-gray-900 dark:text-gray-100 text-sm">🎯 Clientes</h4>
+                    <div class="w-full space-y-2">
+                        <flux:input wire:model="facts_clients_count" label="Número" placeholder="1234" />
+                        <flux:input wire:model="facts_clients_label" label="Etiqueta" placeholder="Clientes" />
+                    </div>
                 </div>
+                <div class="absolute top-0 right-0 w-24 h-24 bg-blue-600/5 dark:bg-blue-400/5 rounded-full -mr-12 -mt-12"></div>
+            </div>
 
-                {{-- Fact 2: Proyectos --}}
-                <div class="space-y-3 p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800/50">
-                    <h4 class="font-medium text-gray-900 dark:text-gray-100 flex items-center gap-2">
-                        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {{-- Fact 2: Proyectos --}}
+            <div class="relative overflow-hidden rounded-xl border border-green-200 dark:border-green-800 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 p-4 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex flex-col items-center text-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-green-600 dark:bg-green-500 flex items-center justify-center shadow-lg">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        Proyectos Completados
-                    </h4>
-                    <flux:input wire:model="facts_projects_count" label="Número" placeholder="567" />
-                    <flux:input wire:model="facts_projects_label" label="Etiqueta" placeholder="Proyectos Completados" />
+                    </div>
+                    <h4 class="font-semibold text-gray-900 dark:text-gray-100 text-sm">📁 Proyectos</h4>
+                    <div class="w-full space-y-2">
+                        <flux:input wire:model="facts_projects_count" label="Número" placeholder="567" />
+                        <flux:input wire:model="facts_projects_label" label="Etiqueta" placeholder="Proyectos" />
+                    </div>
                 </div>
+                <div class="absolute top-0 right-0 w-24 h-24 bg-green-600/5 dark:bg-green-400/5 rounded-full -mr-12 -mt-12"></div>
+            </div>
 
-                {{-- Fact 3: Expertos --}}
-                <div class="space-y-3 p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800/50">
-                    <h4 class="font-medium text-gray-900 dark:text-gray-100 flex items-center gap-2">
-                        <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {{-- Fact 3: Expertos --}}
+            <div class="relative overflow-hidden rounded-xl border border-purple-200 dark:border-purple-800 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 p-4 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex flex-col items-center text-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-purple-600 dark:bg-purple-500 flex items-center justify-center shadow-lg">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                         </svg>
-                        Técnicos Expertos
-                    </h4>
-                    <flux:input wire:model="facts_experts_count" label="Número" placeholder="89" />
-                    <flux:input wire:model="facts_experts_label" label="Etiqueta" placeholder="Técnicos Expertos" />
+                    </div>
+                    <h4 class="font-semibold text-gray-900 dark:text-gray-100 text-sm">👥 Expertos</h4>
+                    <div class="w-full space-y-2">
+                        <flux:input wire:model="facts_experts_count" label="Número" placeholder="89" />
+                        <flux:input wire:model="facts_experts_label" label="Etiqueta" placeholder="Expertos" />
+                    </div>
                 </div>
+                <div class="absolute top-0 right-0 w-24 h-24 bg-purple-600/5 dark:bg-purple-400/5 rounded-full -mr-12 -mt-12"></div>
+            </div>
 
-                {{-- Fact 4: Soporte --}}
-                <div class="space-y-3 p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800/50">
-                    <h4 class="font-medium text-gray-900 dark:text-gray-100 flex items-center gap-2">
-                        <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {{-- Fact 4: Soporte --}}
+            <div class="relative overflow-hidden rounded-xl border border-orange-200 dark:border-orange-800 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 p-4 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex flex-col items-center text-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-orange-600 dark:bg-orange-500 flex items-center justify-center shadow-lg">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
-                        Soporte 24/7
-                    </h4>
-                    <flux:input wire:model="facts_support_count" label="Número" placeholder="24" />
-                    <flux:input wire:model="facts_support_label" label="Etiqueta" placeholder="Soporte 24/7" />
+                    </div>
+                    <h4 class="font-semibold text-gray-900 dark:text-gray-100 text-sm">🎧 Soporte</h4>
+                    <div class="w-full space-y-2">
+                        <flux:input wire:model="facts_support_count" label="Número" placeholder="24" />
+                        <flux:input wire:model="facts_support_label" label="Etiqueta" placeholder="Soporte" />
+                    </div>
+                </div>
+                <div class="absolute top-0 right-0 w-24 h-24 bg-orange-600/5 dark:bg-orange-400/5 rounded-full -mr-12 -mt-12"></div>
+            </div>
+
+            {{-- Preview de Imagen de fondo --}}
+            <div class="relative md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Preview de Imagen</label>
+                <div wire:key="facts-bg-preview-{{ $facts_bg_image ?? 'empty' }}" class="border border-gray-300 dark:border-gray-600 rounded-lg flex items-center justify-center bg-gray-50 dark:bg-gray-800 h-[250px]">
+                    @if($newFactsBgImage)
+                        <img src="{{ $newFactsBgImage->temporaryUrl() }}" class="w-full h-full object-cover rounded-lg" alt="Nueva imagen de fondo">
+                    @elseif($facts_bg_image)
+                        <img src="{{ str_starts_with($facts_bg_image, 'img/') ? asset($facts_bg_image) : asset('storage/' . $facts_bg_image) }}?v={{ time() }}" class="w-full h-full object-cover rounded-lg" alt="Imagen de fondo actual">
+                    @else
+                        <div class="text-center text-gray-400">
+                            <svg class="h-12 w-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span class="text-sm">Sin imagen de fondo</span>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+            {{-- Dropdown de carga de imagen --}}
+            <div class="relative md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Subir Imagen de Fondo</label>
+                <div x-data="{
+                    isDragging: false,
+                    handleDrop(e) {
+                        this.isDragging = false;
+                        const files = e.dataTransfer.files;
+                        if (files.length > 0) {
+                            @this.upload('newFactsBgImage', files[0]);
+                        }
+                    }
+                }" @dragover.prevent="isDragging = true"
+                    @dragleave.prevent="isDragging = false" @drop.prevent="handleDrop($event)"
+                    :class="isDragging ? 'border-blue-500 bg-blue-50 dark:bg-blue-900' :
+                        'border-gray-300 dark:border-gray-600'"
+                    class="border-2 border-dashed rounded-lg p-4 text-center cursor-pointer hover:border-gray-400 dark:hover:border-gray-500 transition-colors h-[250px] flex flex-col items-center justify-center"
+                    onclick="document.getElementById('facts-bg-upload').click()">
+                    <svg class="h-12 w-12 mx-auto mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        <span class="font-medium text-blue-600">Haz clic para subir</span> o arrastra la imagen aquí
+                    </p>
+                    <p class="text-xs text-gray-500 mt-2">PNG, JPG hasta 2MB</p>
+                    <input id="facts-bg-upload" type="file" wire:model="newFactsBgImage" accept="image/*" class="hidden">
+                </div>
+
+                @error('newFactsBgImage')
+                    <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                @enderror
+
+                <div wire:loading wire:target="newFactsBgImage"
+                    class="absolute inset-0 bg-white bg-opacity-75 dark:bg-gray-800 dark:bg-opacity-75 rounded-lg flex items-center justify-center">
+                    <div class="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800 px-3 py-2 rounded shadow">
+                        <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span>Subiendo...</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -675,7 +756,7 @@
                 type="submit" 
                 variant="primary"
                 wire:loading.attr="disabled"
-                wire:target="newLogo,newAboutImage1,newAboutImage2,newAboutImage3,newAboutImage4,newFeature1Icon,newFeature2Icon,newFeatureDescription1Icon,newFeatureDescription2Icon,newFeatureDescription3Icon,newFeaturesImage,newQuoteBgImage1,newQuoteBgImage2"
+                wire:target="newLogo,newAboutImage1,newAboutImage2,newAboutImage3,newAboutImage4,newFeature1Icon,newFeature2Icon,newFeatureDescription1Icon,newFeatureDescription2Icon,newFeatureDescription3Icon,newFeaturesImage,newQuoteBgImage1,newQuoteBgImage2,newFactsBgImage"
             >
                 <span wire:loading.remove wire:target="save">Guardar Cambios</span>
                 <span wire:loading wire:target="save" class="flex items-center">

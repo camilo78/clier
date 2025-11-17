@@ -96,6 +96,7 @@ class CompanyInfo extends Model
         'facts_experts_label',  // Etiqueta expertos
         'facts_support_count',  // Número soporte
         'facts_support_label',  // Etiqueta soporte
+        'facts_bg_image',       // Imagen de fondo Facts
         // Sección Testimonials
         'testimonials_title',   // Título testimonios
         // Feature 3 title

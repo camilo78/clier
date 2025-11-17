@@ -67,6 +67,7 @@ class CompanyInfoSeeder extends Seeder
             'facts_experts_label' => 'Técnicos Expertos',
             'facts_support_count' => '24',
             'facts_support_label' => 'Soporte 24/7',
+            'facts_bg_image' => 'img/carousel-1.jpg',
             // Sección Testimonials
             'testimonials_title' => 'Lo Que Dicen Sobre Nuestros Servicios',
             // Feature 3 title

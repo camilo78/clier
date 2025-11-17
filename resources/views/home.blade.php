@@ -266,22 +266,22 @@
 
             @if($companyInfo && $companyInfo->facts_enabled)
             <!-- Facts Start -->
-            <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="img/carousel-1.jpg">
+            <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="{{ $companyInfo->facts_bg_image ? (str_starts_with($companyInfo->facts_bg_image, 'img/') ? asset($companyInfo->facts_bg_image) : asset('storage/' . $companyInfo->facts_bg_image)) . '?v=' . time() : asset('img/carousel-1.jpg') }}">
                 <div class="container py-5">
                     <div class="row g-5">
-                        <div class="col-sm-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
+                        <div class="col-sm-6 col-lg-3 wow fadeIn text-center" data-wow-delay="0.1s">
                             <h1 class="display-4 text-white" data-toggle="counter-up">{{ $companyInfo->facts_clients_count ?? '1234' }}</h1>
                             <span class="text-primary">{{ $companyInfo->facts_clients_label ?? 'Clientes Satisfechos' }}</span>
                         </div>
-                        <div class="col-sm-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
+                        <div class="col-sm-6 col-lg-3 wow fadeIn text-center" data-wow-delay="0.3s">
                             <h1 class="display-4 text-white" data-toggle="counter-up">{{ $companyInfo->facts_projects_count ?? '567' }}</h1>
                             <span class="text-primary">{{ $companyInfo->facts_projects_label ?? 'Proyectos Completados' }}</span>
                         </div>
-                        <div class="col-sm-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
+                        <div class="col-sm-6 col-lg-3 wow fadeIn text-center" data-wow-delay="0.5s">
                             <h1 class="display-4 text-white" data-toggle="counter-up">{{ $companyInfo->facts_experts_count ?? '89' }}</h1>
                             <span class="text-primary">{{ $companyInfo->facts_experts_label ?? 'Técnicos Expertos' }}</span>
                         </div>
-                        <div class="col-sm-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
+                        <div class="col-sm-6 col-lg-3 wow fadeIn text-center" data-wow-delay="0.7s">
                             <h1 class="display-4 text-white" data-toggle="counter-up">{{ $companyInfo->facts_support_count ?? '24' }}</h1>
                             <span class="text-primary">{{ $companyInfo->facts_support_label ?? 'Soporte 24/7' }}</span>
                         </div>
