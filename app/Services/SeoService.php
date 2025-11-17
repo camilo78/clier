@@ -63,29 +63,29 @@ class SeoService
 
         return [
             // Meta tags básicos
-            'title' => $pageSeo->title ?? $global->site_name ?? config('app.name'),
-            'description' => $pageSeo->meta_description ?? $global->site_description,
+            'title' => $pageSeo->title ?? $global?->site_name ?? config('app.name'),
+            'description' => $pageSeo->meta_description ?? $global?->site_description,
             'keywords' => $pageSeo->meta_keywords,
-            'robots' => $pageSeo->robots ?? $global->robots_default,
+            'robots' => $pageSeo->robots ?? $global?->robots_default,
             'canonical' => $pageSeo->canonical_url,
 
             // Open Graph
-            'og_title' => $pageSeo->og_title ?? $pageSeo->title ?? $global->site_name,
-            'og_description' => $pageSeo->og_description ?? $pageSeo->meta_description ?? $global->site_description,
-            'og_image' => $this->getFullImageUrl($pageSeo->og_image ?? $global->default_og_image),
+            'og_title' => $pageSeo->og_title ?? $pageSeo->title ?? $global?->site_name,
+            'og_description' => $pageSeo->og_description ?? $pageSeo->meta_description ?? $global?->site_description,
+            'og_image' => $this->getFullImageUrl($pageSeo->og_image ?? $global?->default_og_image),
             'og_type' => $pageSeo->og_type ?? 'website',
             'og_url' => $pageSeo->canonical_url ?? url()->current(),
 
             // Twitter Card
-            'twitter_card' => $global->twitter_card_type ?? 'summary_large_image',
-            'twitter_site' => $global->twitter_site,
-            'twitter_title' => $pageSeo->twitter_title ?? $pageSeo->title ?? $global->site_name,
-            'twitter_description' => $pageSeo->twitter_description ?? $pageSeo->meta_description ?? $global->site_description,
-            'twitter_image' => $this->getFullImageUrl($pageSeo->twitter_image ?? $pageSeo->og_image ?? $global->default_og_image),
+            'twitter_card' => $global?->twitter_card_type ?? 'summary_large_image',
+            'twitter_site' => $global?->twitter_site,
+            'twitter_title' => $pageSeo->twitter_title ?? $pageSeo->title ?? $global?->site_name,
+            'twitter_description' => $pageSeo->twitter_description ?? $pageSeo->meta_description ?? $global?->site_description,
+            'twitter_image' => $this->getFullImageUrl($pageSeo->twitter_image ?? $pageSeo->og_image ?? $global?->default_og_image),
 
             // Verificaciones
-            'google_site_verification' => $global->google_site_verification,
-            'bing_site_verification' => $global->bing_site_verification,
+            'google_site_verification' => $global?->google_site_verification,
+            'bing_site_verification' => $global?->bing_site_verification,
         ];
     }
 
@@ -99,15 +99,15 @@ class SeoService
         $global = $this->globalConfig;
 
         return [
-            'title' => $global->site_name ?? config('app.name'),
-            'description' => $global->site_description,
-            'robots' => $global->robots_default ?? 'index, follow',
-            'og_title' => $global->site_name,
-            'og_description' => $global->site_description,
-            'og_image' => $this->getFullImageUrl($global->default_og_image),
+            'title' => $global?->site_name ?? config('app.name'),
+            'description' => $global?->site_description,
+            'robots' => $global?->robots_default ?? 'index, follow',
+            'og_title' => $global?->site_name,
+            'og_description' => $global?->site_description,
+            'og_image' => $this->getFullImageUrl($global?->default_og_image),
             'og_type' => 'website',
-            'twitter_card' => $global->twitter_card_type,
-            'twitter_site' => $global->twitter_site,
+            'twitter_card' => $global?->twitter_card_type,
+            'twitter_site' => $global?->twitter_site,
         ];
     }
 
