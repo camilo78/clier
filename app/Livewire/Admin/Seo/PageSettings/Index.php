@@ -7,6 +7,7 @@ use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\WithFileUploads;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Controlador Livewire para la gestión de SEO por página
@@ -71,8 +72,16 @@ class Index extends Component
             'og_type' => 'nullable|string|max:50',
             'twitter_title' => 'nullable|string|max:255',
             'twitter_description' => 'nullable|string|max:500',
-            'canonical_url' => 'nullable|url',
+            'canonical_url' => ['nullable', 'url', 'regex:/^https?:\/\/' . preg_quote(parse_url(url('/'), PHP_URL_HOST), '/') . '/'],
             'robots' => 'nullable|string|max:255',
+            'newOgImage' => 'nullable|image|max:2048|mimes:jpg,jpeg,png,webp',
+            'newTwitterImage' => 'nullable|image|max:2048|mimes:jpg,jpeg,png,webp',
+        ], [
+            'canonical_url.regex' => 'La URL canónica debe pertenecer al dominio ' . parse_url(url('/'), PHP_URL_HOST),
+            'newOgImage.image' => 'El archivo debe ser una imagen válida',
+            'newOgImage.max' => 'La imagen no debe ser mayor a 2MB',
+            'newTwitterImage.image' => 'El archivo debe ser una imagen válida',
+            'newTwitterImage.max' => 'La imagen no debe ser mayor a 2MB',
         ]);
 
         // Procesar imágenes
@@ -104,6 +113,9 @@ class Index extends Component
 
         if ($this->selectedPage) {
             $this->selectedPage->update($data);
+
+            // Invalidar cache del sitemap cuando se actualiza una página
+            Cache::forget('sitemap_xml');
         }
 
         $this->loadPages();

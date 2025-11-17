@@ -1,51 +1,51 @@
 {{-- Meta Tags Básicos --}}
-@if($metaTags['title'])
+@if(!empty($metaTags['title']))
     <title>{{ $metaTags['title'] }}</title>
 @endif
 
-@if($metaTags['description'])
+@if(!empty($metaTags['description']))
     <meta name="description" content="{{ $metaTags['description'] }}">
 @endif
 
-@if($metaTags['keywords'])
+@if(!empty($metaTags['keywords']))
     <meta name="keywords" content="{{ $metaTags['keywords'] }}">
 @endif
 
-@if($metaTags['robots'])
+@if(!empty($metaTags['robots']))
     <meta name="robots" content="{{ $metaTags['robots'] }}">
 @endif
 
-@if($metaTags['canonical'])
+@if(!empty($metaTags['canonical']))
     <link rel="canonical" href="{{ $metaTags['canonical'] }}">
 @endif
 
 {{-- Verificaciones de Motores de Búsqueda --}}
-@if($metaTags['google_site_verification'])
+@if(!empty($metaTags['google_site_verification']))
     <meta name="google-site-verification" content="{{ $metaTags['google_site_verification'] }}">
 @endif
 
-@if($metaTags['bing_site_verification'])
+@if(!empty($metaTags['bing_site_verification']))
     <meta name="msvalidate.01" content="{{ $metaTags['bing_site_verification'] }}">
 @endif
 
 {{-- Open Graph Tags --}}
-@if($metaTags['og_title'])
+@if(!empty($metaTags['og_title']))
     <meta property="og:title" content="{{ $metaTags['og_title'] }}">
 @endif
 
-@if($metaTags['og_description'])
+@if(!empty($metaTags['og_description']))
     <meta property="og:description" content="{{ $metaTags['og_description'] }}">
 @endif
 
-@if($metaTags['og_image'])
+@if(!empty($metaTags['og_image']))
     <meta property="og:image" content="{{ $metaTags['og_image'] }}">
 @endif
 
-@if($metaTags['og_type'])
+@if(!empty($metaTags['og_type']))
     <meta property="og:type" content="{{ $metaTags['og_type'] }}">
 @endif
 
-@if($metaTags['og_url'])
+@if(!empty($metaTags['og_url']))
     <meta property="og:url" content="{{ $metaTags['og_url'] }}">
 @endif
 
@@ -53,35 +53,35 @@
 <meta property="og:site_name" content="{{ config('app.name') }}">
 
 {{-- Twitter Card Tags --}}
-@if($metaTags['twitter_card'])
+@if(!empty($metaTags['twitter_card']))
     <meta name="twitter:card" content="{{ $metaTags['twitter_card'] }}">
 @endif
 
-@if($metaTags['twitter_site'])
+@if(!empty($metaTags['twitter_site']))
     <meta name="twitter:site" content="{{ $metaTags['twitter_site'] }}">
 @endif
 
-@if($metaTags['twitter_title'])
+@if(!empty($metaTags['twitter_title']))
     <meta name="twitter:title" content="{{ $metaTags['twitter_title'] }}">
 @endif
 
-@if($metaTags['twitter_description'])
+@if(!empty($metaTags['twitter_description']))
     <meta name="twitter:description" content="{{ $metaTags['twitter_description'] }}">
 @endif
 
-@if($metaTags['twitter_image'])
+@if(!empty($metaTags['twitter_image']))
     <meta name="twitter:image" content="{{ $metaTags['twitter_image'] }}">
 @endif
 
 {{-- Datos Estructurados (JSON-LD) --}}
-@if($structuredData)
+@if(!empty($structuredData))
     <script type="application/ld+json">
         {!! json_encode($structuredData, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
     </script>
 @endif
 
 {{-- Google Analytics --}}
-@if($trackingScripts['google_analytics_id'])
+@if(!empty($trackingScripts['google_analytics_id']))
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ $trackingScripts['google_analytics_id'] }}"></script>
     <script>
@@ -93,7 +93,7 @@
 @endif
 
 {{-- Google Tag Manager --}}
-@if($trackingScripts['google_tag_manager_id'])
+@if(!empty($trackingScripts['google_tag_manager_id']))
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -104,7 +104,7 @@
 @endif
 
 {{-- Facebook Pixel --}}
-@if($trackingScripts['facebook_pixel_id'])
+@if(!empty($trackingScripts['facebook_pixel_id']))
     <!-- Meta Pixel Code -->
     <script>
     !function(f,b,e,v,n,t,s)

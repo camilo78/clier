@@ -104,7 +104,15 @@
                             </h4>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="md:col-span-2" x-data="{ count: $wire.entangle('title').live.length }">
-                                    <flux:input wire:model.live="title" label="Título SEO" />
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <label class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Título SEO</label>
+                                        <flux:tooltip content="El título que aparecerá en los resultados de búsqueda de Google. Longitud ideal: 50-60 caracteres." position="right">
+                                            <svg class="w-4 h-4 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </flux:tooltip>
+                                    </div>
+                                    <flux:input wire:model.live="title" />
                                     <p class="text-xs mt-1" :class="count > 60 ? 'text-red-500' : (count > 50 ? 'text-amber-500' : 'text-green-500')">
                                         <span x-text="count"></span>/60 caracteres
                                         <span x-show="count > 60" class="ml-1">⚠️ Muy largo</span>
@@ -112,7 +120,15 @@
                                     </p>
                                 </div>
                                 <div class="md:col-span-2" x-data="{ count: $wire.entangle('meta_description').live.length }">
-                                    <flux:textarea wire:model.live="meta_description" label="Meta Descripción" rows="3" />
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <label class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Meta Descripción</label>
+                                        <flux:tooltip content="Resumen de la página que aparece bajo el título en Google. Debe ser atractiva para generar clics. Longitud ideal: 140-160 caracteres." position="right">
+                                            <svg class="w-4 h-4 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </flux:tooltip>
+                                    </div>
+                                    <flux:textarea wire:model.live="meta_description" rows="3" />
                                     <p class="text-xs mt-1" :class="count > 160 ? 'text-red-500' : (count > 140 ? 'text-amber-500' : 'text-green-500')">
                                         <span x-text="count"></span>/160 caracteres
                                         <span x-show="count > 160" class="ml-1">⚠️ Muy larga</span>
@@ -120,7 +136,15 @@
                                     </p>
                                 </div>
                                 <div class="md:col-span-2">
-                                    <flux:textarea wire:model="meta_keywords" label="Palabras Clave (separadas por comas)" rows="2" />
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <label class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Palabras Clave</label>
+                                        <flux:tooltip content="Términos relevantes para tu página. Separa con comas. Ejemplo: climatización, aire acondicionado, La Ceiba" position="right">
+                                            <svg class="w-4 h-4 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </flux:tooltip>
+                                    </div>
+                                    <flux:textarea wire:model="meta_keywords" rows="2" />
                                     <p class="text-xs mt-1 text-zinc-500 dark:text-zinc-400">Separa las palabras clave con comas. Ej: climatización, aire acondicionado, La Ceiba</p>
                                 </div>
                             </div>
@@ -128,9 +152,16 @@
 
                         {{-- Open Graph --}}
                         <div>
-                            <h4 class="text-base font-semibold text-zinc-900 dark:text-white border-b border-zinc-200 dark:border-zinc-800 pb-2 mb-4">
-                                Open Graph (Facebook)
-                            </h4>
+                            <div class="flex items-center gap-2 border-b border-zinc-200 dark:border-zinc-800 pb-2 mb-4">
+                                <h4 class="text-base font-semibold text-zinc-900 dark:text-white">
+                                    Open Graph (Facebook)
+                                </h4>
+                                <flux:tooltip content="Controla cómo se ve tu página cuando se comparte en Facebook, WhatsApp y otras redes sociales" position="right">
+                                    <svg class="w-4 h-4 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </flux:tooltip>
+                            </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <flux:input wire:model="og_title" label="OG Título" />
                                 <flux:input wire:model="og_type" label="OG Type" placeholder="website" />
@@ -180,9 +211,16 @@
 
                         {{-- Twitter Card --}}
                         <div>
-                            <h4 class="text-base font-semibold text-zinc-900 dark:text-white border-b border-zinc-200 dark:border-zinc-800 pb-2 mb-4">
-                                Twitter Card
-                            </h4>
+                            <div class="flex items-center gap-2 border-b border-zinc-200 dark:border-zinc-800 pb-2 mb-4">
+                                <h4 class="text-base font-semibold text-zinc-900 dark:text-white">
+                                    Twitter Card
+                                </h4>
+                                <flux:tooltip content="Controla cómo se ve tu página cuando se comparte en Twitter/X" position="right">
+                                    <svg class="w-4 h-4 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </flux:tooltip>
+                            </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="md:col-span-2">
                                     <flux:input wire:model="twitter_title" label="Twitter Título" />
@@ -237,10 +275,38 @@
                                 Configuración Avanzada
                             </h4>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <flux:input wire:model="canonical_url" label="URL Canónica" type="url" />
-                                <flux:input wire:model="robots" label="Robots" placeholder="index, follow" />
+                                <div>
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <label class="text-sm font-medium text-zinc-700 dark:text-zinc-300">URL Canónica</label>
+                                        <flux:tooltip content="La URL oficial de esta página. Previene contenido duplicado en Google. Debe ser del mismo dominio." position="right">
+                                            <svg class="w-4 h-4 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </flux:tooltip>
+                                    </div>
+                                    <flux:input wire:model="canonical_url" type="url" />
+                                    @error('canonical_url') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <label class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Robots</label>
+                                        <flux:tooltip content="Controla si los motores de búsqueda pueden indexar esta página. Valores comunes: 'index, follow' o 'noindex, nofollow'" position="right">
+                                            <svg class="w-4 h-4 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </flux:tooltip>
+                                    </div>
+                                    <flux:input wire:model="robots" placeholder="index, follow" />
+                                </div>
                                 <div class="md:col-span-2">
-                                    <flux:checkbox wire:model="is_active" label="Página Activa en Sitemap" />
+                                    <div class="flex items-center gap-2">
+                                        <flux:checkbox wire:model="is_active" label="Página Activa en Sitemap" />
+                                        <flux:tooltip content="Si está activa, la página aparecerá en el sitemap.xml y será visible para motores de búsqueda" position="right">
+                                            <svg class="w-4 h-4 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </flux:tooltip>
+                                    </div>
                                 </div>
                             </div>
                         </div>
