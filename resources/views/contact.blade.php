@@ -9,7 +9,7 @@
     <x-seo-head page="contact" />
 
     <!-- Favicon -->
-    <link href="{{ $companyInfo->logo ? asset('storage/' . $companyInfo->logo) : asset('img/logo.png') }}" rel="icon">
+    <link href="{{ $companyInfo->logo ? (str_starts_with($companyInfo->logo, 'img/') ? asset($companyInfo->logo) : asset('storage/' . $companyInfo->logo)) : asset('img/logo.png') }}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,7 +44,7 @@
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5">
         <a href="{{ route('home') }}" class="navbar-brand d-flex align-items-center">
             @if($companyInfo)
-            <h1 class="m-0"><img class="img-fluid me-3" src="{{ $companyInfo->logo ? asset('storage/' . $companyInfo->logo) : asset('img/logo.png') }}" alt=""></h1>
+            <h1 class="m-0"><img class="img-fluid me-3" src="{{ $companyInfo->logo ? (str_starts_with($companyInfo->logo, 'img/') ? asset($companyInfo->logo) : asset('storage/' . $companyInfo->logo)) : asset('img/logo.png') }}" alt=""></h1>
             @else
             <h1 class="m-0"><img class="img-fluid me-3" src="{{ asset('img/logo.png') }}" alt="">AirCon</h1>
             @endif
@@ -123,34 +123,44 @@
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <form>
+                    <form id="contactForm">
+                        @csrf
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Tu Nombre">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Tu Nombre" required>
                                     <label for="name">Tu Nombre</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Tu Email">
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Tu Email" required>
                                     <label for="email">Tu Email</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="subject" placeholder="Asunto">
+                                    <input type="text" class="form-control" id="subject" name="subject" placeholder="Asunto" required>
                                     <label for="subject">Asunto</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Deja tu mensaje aquí" id="message" style="height: 150px"></textarea>
+                                    <textarea class="form-control" placeholder="Deja tu mensaje aquí" id="message" name="message" style="height: 150px" required></textarea>
                                     <label for="message">Mensaje</label>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-primary py-3 px-5" type="submit">Enviar Mensaje</button>
+                                <div id="contactFormMessage"></div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary py-3 px-5" type="submit" id="contactSubmitBtn">
+                                    <span id="contactBtnText">Enviar Mensaje</span>
+                                    <span id="contactBtnSpinner" class="d-none">
+                                        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                        Enviando...
+                                    </span>
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -177,6 +187,93 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <!-- Contact Form Handler -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('contactSubmitBtn');
+            const btnText = document.getElementById('contactBtnText');
+            const btnSpinner = document.getElementById('contactBtnSpinner');
+            const messageDiv = document.getElementById('contactFormMessage');
+
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Show loading state
+                submitBtn.disabled = true;
+                btnText.classList.add('d-none');
+                btnSpinner.classList.remove('d-none');
+                messageDiv.innerHTML = '';
+
+                // Collect form data
+                const formData = new FormData(contactForm);
+
+                // Send AJAX request
+                fetch('{{ route("contact.send") }}', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Hide loading state
+                    submitBtn.disabled = false;
+                    btnText.classList.remove('d-none');
+                    btnSpinner.classList.add('d-none');
+
+                    if (data.success) {
+                        // Show success message
+                        messageDiv.innerHTML = `
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <i class="fa fa-check-circle me-2"></i>${data.message}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        `;
+
+                        // Reset form
+                        contactForm.reset();
+
+                        // Auto-hide success message after 7 seconds
+                        setTimeout(() => {
+                            const alert = messageDiv.querySelector('.alert');
+                            if (alert) {
+                                const bsAlert = new bootstrap.Alert(alert);
+                                bsAlert.close();
+                            }
+                        }, 7000);
+                    } else {
+                        // Show error message
+                        messageDiv.innerHTML = `
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="fa fa-exclamation-triangle me-2"></i>${data.message || 'Ocurrió un error al enviar el formulario.'}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+
+                    // Hide loading state
+                    submitBtn.disabled = false;
+                    btnText.classList.remove('d-none');
+                    btnSpinner.classList.add('d-none');
+
+                    // Show error message
+                    messageDiv.innerHTML = `
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fa fa-exclamation-triangle me-2"></i>Error de conexión. Por favor, intente nuevamente.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    `;
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

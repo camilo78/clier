@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5">
         <a href="{{ route('home') }}" class="navbar-brand d-flex align-items-center">
             @if($companyInfo)
-            <h1 class="m-0"><img class="img-fluid me-3" src="{{ $companyInfo->logo ? asset('storage/' . $companyInfo->logo) : asset('img/logo.png') }}" alt=""></h1>
+            <h1 class="m-0"><img class="img-fluid me-3" src="{{ $companyInfo->logo ? (str_starts_with($companyInfo->logo, 'img/') ? asset($companyInfo->logo) : asset('storage/' . $companyInfo->logo)) : asset('img/logo.png') }}" alt=""></h1>
             @else
             <h1 class="m-0"><img class="img-fluid me-3" src="{{ asset('img/logo.png') }}" alt="">AirCon</h1>
             @endif

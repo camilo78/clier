@@ -11,7 +11,7 @@
                 <a href="{{ route('home') }}" class="relative z-20 flex items-center text-lg font-medium">
                     @php $companyInfo = \App\Models\CompanyInfo::first(); @endphp
                     @if($companyInfo && $companyInfo->logo)
-                        <img src="{{ asset('storage/' . $companyInfo->logo) }}" alt="{{ $companyInfo->name }}" class="h-10 w-auto">
+                        <img src="{{ $companyInfo->logo ? (str_starts_with($companyInfo->logo, 'img/') ? asset($companyInfo->logo) : asset('storage/' . $companyInfo->logo)) : asset('img/logo.png') }}" alt="{{ $companyInfo->name }}" class="h-10 w-auto">
                     @else
                         <span class="flex h-10 w-10 items-center justify-center rounded-md">
                             <x-app-logo-icon class="h-7 fill-current text-white" />
@@ -57,7 +57,7 @@
                     <a href="{{ route('home') }}" class="z-20 flex flex-col items-center gap-2 font-medium lg:hidden">
                         @php $companyInfo = \App\Models\CompanyInfo::first(); @endphp
                         @if($companyInfo && $companyInfo->logo)
-                            <img src="{{ asset('storage/' . $companyInfo->logo) }}" alt="{{ $companyInfo->name }}" class="h-9 w-auto">
+                            <img src="{{ $companyInfo->logo ? (str_starts_with($companyInfo->logo, 'img/') ? asset($companyInfo->logo) : asset('storage/' . $companyInfo->logo)) : asset('img/logo.png') }}" alt="{{ $companyInfo->name }}" class="h-9 w-auto">
                             <span class="sr-only">{{ $companyInfo->name }}</span>
                         @else
                             <span class="flex h-9 w-9 items-center justify-center rounded-md">

@@ -4,7 +4,7 @@
         <div class="row g-5">
             <div class="col-md-6">
                 @if(isset($companyInfo) && $companyInfo)
-                <img class="img-fluid me-3 mb-4" width="175px" style="filter: brightness(0) invert(1);" src="{{ $companyInfo->logo ? asset('storage/' . $companyInfo->logo) : asset('img/logo.png') }}" alt="">
+                <img class="img-fluid me-3 mb-4" width="175px" style="filter: brightness(0) invert(1);" src="{{ $companyInfo->logo ? (str_starts_with($companyInfo->logo, 'img/') ? asset($companyInfo->logo) : asset('storage/' . $companyInfo->logo)) : asset('img/logo.png') }}" alt="">
                 <p>{{ $companyInfo->description }}</p>
                 @else
                 <h1 class="text-white mb-4"><img class="img-fluid me-3" src="{{ asset('img/logo.png') }}" alt="">AirCon</h1>

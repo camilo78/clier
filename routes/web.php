@@ -9,6 +9,12 @@ Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'index']
 Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
 Route::get('/robots.txt', [\App\Http\Controllers\RobotsTxtController::class, 'index'])->name('robots');
 
+// Quote request route
+Route::post('/quote-request', [\App\Http\Controllers\QuoteRequestController::class, 'send'])->name('quote.send');
+
+// Contact form route
+Route::post('/contact-send', [\App\Http\Controllers\ContactController::class, 'send'])->name('contact.send');
+
 Route::middleware(['auth'])->group(function (): void {
     
     // Redirect /admin to admin index

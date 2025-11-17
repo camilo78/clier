@@ -10,7 +10,7 @@
 
     <!-- Favicon -->
     <link
-        href="{{ $companyInfo->logo ? asset('storage/' . $companyInfo->logo) : asset('storage/' . $companyInfo->logo) }}"
+        href="{{ $companyInfo->logo ? (str_starts_with($companyInfo->logo, 'img/') ? asset($companyInfo->logo) : asset('storage/' . $companyInfo->logo)) : asset('img/logo.png') }}"
         rel="icon">
 
     <!-- Google Web Fonts -->
@@ -114,7 +114,7 @@
             <a href="{{ route('home') }}" class="navbar-brand d-flex align-items-center">
                 @if ($companyInfo)
                     <h1 class="m-0"><img class="img-fluid me-3"
-                            src="{{ $companyInfo->logo ? asset('storage/' . $companyInfo->logo) : asset('img/logo.png') }}"
+                            src="{{ $companyInfo->logo ? (str_starts_with($companyInfo->logo, 'img/') ? asset($companyInfo->logo) : asset('storage/' . $companyInfo->logo)) : asset('img/logo.png') }}"
                             alt=""></h1>
                 @else
                     <h1 class="m-0"><img class="img-fluid me-3" src="{{ asset('img/logo.png') }}"
@@ -409,45 +409,57 @@
                         <div class="col-lg-6 quote-form" data-parallax="scroll" data-image-src="{{ $companyInfo->quote_bg_image_2 ? (str_starts_with($companyInfo->quote_bg_image_2, 'img/') ? asset($companyInfo->quote_bg_image_2) : asset('storage/' . $companyInfo->quote_bg_image_2)) : asset('img/carousel-2.jpg') }}">
                             <div class="h-100 px-4 px-sm-5 pe-lg-0 wow fadeIn" data-wow-delay="0.5s">
                                 <div class="bg-white p-4 p-sm-5">
-                                    <div class="row g-3">
-                                        <div class="col-sm-6">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="gname"
-                                                    placeholder="Nombre">
-                                                <label for="gname">{{ $companyInfo->quote_form_name_label ?? 'Tu Nombre' }}</label>
+                                    <form id="quoteForm">
+                                        @csrf
+                                        <div class="row g-3">
+                                            <div class="col-sm-6">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="gname" name="name"
+                                                        placeholder="Nombre" required>
+                                                    <label for="gname">{{ $companyInfo->quote_form_name_label ?? 'Tu Nombre' }}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-floating">
+                                                    <input type="email" class="form-control" id="gmail" name="email"
+                                                        placeholder="Email" required>
+                                                    <label for="gmail">{{ $companyInfo->quote_form_email_label ?? 'Tu Email' }}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="cname" name="phone"
+                                                        placeholder="Móvil" required>
+                                                    <label for="cname">{{ $companyInfo->quote_form_phone_label ?? 'Tu Móvil' }}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="cage" name="service"
+                                                        placeholder="Servicio" required>
+                                                    <label for="cage">{{ $companyInfo->quote_form_service_label ?? 'Tipo de Servicio' }}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-floating">
+                                                    <textarea class="form-control" placeholder="Mensaje" id="message" name="message" style="height: 80px" required></textarea>
+                                                    <label for="message">{{ $companyInfo->quote_form_message_label ?? 'Mensaje' }}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div id="quoteFormMessage"></div>
+                                            </div>
+                                            <div class="col-12">
+                                                <button class="btn btn-primary py-3 px-5" type="submit" id="quoteSubmitBtn">
+                                                    <span id="btnText">{{ $companyInfo->quote_form_button_text ?? 'Obtener Cotización Gratuita' }}</span>
+                                                    <span id="btnSpinner" class="d-none">
+                                                        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                                        Enviando...
+                                                    </span>
+                                                </button>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-floating">
-                                                <input type="email" class="form-control" id="gmail"
-                                                    placeholder="Email">
-                                                <label for="gmail">{{ $companyInfo->quote_form_email_label ?? 'Tu Email' }}</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="cname"
-                                                    placeholder="Móvil">
-                                                <label for="cname">{{ $companyInfo->quote_form_phone_label ?? 'Tu Móvil' }}</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="cage"
-                                                    placeholder="Servicio">
-                                                <label for="cage">{{ $companyInfo->quote_form_service_label ?? 'Tipo de Servicio' }}</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-floating">
-                                                <textarea class="form-control" placeholder="Mensaje" id="message" style="height: 80px"></textarea>
-                                                <label for="message">{{ $companyInfo->quote_form_message_label ?? 'Mensaje' }}</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <button class="btn btn-primary py-3 px-5" type="submit">{{ $companyInfo->quote_form_button_text ?? 'Obtener Cotización Gratuita' }}</button>
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -531,6 +543,93 @@
 
                 <!-- Template Javascript -->
                 <script src="js/main.js"></script>
+
+                <!-- Quote Form Handler -->
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const quoteForm = document.getElementById('quoteForm');
+                        const submitBtn = document.getElementById('quoteSubmitBtn');
+                        const btnText = document.getElementById('btnText');
+                        const btnSpinner = document.getElementById('btnSpinner');
+                        const messageDiv = document.getElementById('quoteFormMessage');
+
+                        quoteForm.addEventListener('submit', function(e) {
+                            e.preventDefault();
+
+                            // Show loading state
+                            submitBtn.disabled = true;
+                            btnText.classList.add('d-none');
+                            btnSpinner.classList.remove('d-none');
+                            messageDiv.innerHTML = '';
+
+                            // Collect form data
+                            const formData = new FormData(quoteForm);
+
+                            // Send AJAX request
+                            fetch('{{ route("quote.send") }}', {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                    'Accept': 'application/json'
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                // Hide loading state
+                                submitBtn.disabled = false;
+                                btnText.classList.remove('d-none');
+                                btnSpinner.classList.add('d-none');
+
+                                if (data.success) {
+                                    // Show success message
+                                    messageDiv.innerHTML = `
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <i class="fa fa-check-circle me-2"></i>${data.message}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                        </div>
+                                    `;
+
+                                    // Reset form
+                                    quoteForm.reset();
+
+                                    // Auto-hide success message after 5 seconds
+                                    setTimeout(() => {
+                                        const alert = messageDiv.querySelector('.alert');
+                                        if (alert) {
+                                            const bsAlert = new bootstrap.Alert(alert);
+                                            bsAlert.close();
+                                        }
+                                    }, 5000);
+                                } else {
+                                    // Show error message
+                                    messageDiv.innerHTML = `
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <i class="fa fa-exclamation-triangle me-2"></i>${data.message || 'Ocurrió un error al enviar el formulario.'}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                        </div>
+                                    `;
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+
+                                // Hide loading state
+                                submitBtn.disabled = false;
+                                btnText.classList.remove('d-none');
+                                btnSpinner.classList.add('d-none');
+
+                                // Show error message
+                                messageDiv.innerHTML = `
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <i class="fa fa-exclamation-triangle me-2"></i>Error de conexión. Por favor, intente nuevamente.
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                    </div>
+                                `;
+                            });
+                        });
+                    });
+                </script>
 </body>
 
 </html>
