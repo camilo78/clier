@@ -16,7 +16,8 @@
         <div class="col-lg-5 px-5 text-end">
             <ol class="breadcrumb justify-content-end mb-0">
                 <li class="breadcrumb-item"><a class="text-white-50 small" href="{{ route('login') }}">{{ __('Inicia Sesión') }}</a></li>
-                <li class="breadcrumb-item"><a class="text-white-50 small" href="{{ route('register') }}">{{ __('Registrate') }}</a></li>
+                {{-- Registro deshabilitado - solo admins pueden crear usuarios --}}
+                {{-- <li class="breadcrumb-item"><a class="text-white-50 small" href="{{ route('register') }}">{{ __('Registrate') }}</a></li> --}}
             </ol>
         </div>
     </div>
