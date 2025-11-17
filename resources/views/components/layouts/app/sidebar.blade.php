@@ -62,6 +62,18 @@
                 {{ __('cms.testimonials') }}
             </flux:navlist.item>
         @endcan
+
+        <!-- SEO -->
+        @can('manage cms')
+            <flux:navlist.group heading="SEO" expandable :expanded="request()->routeIs('admin.seo.*')" class="grid">
+                <flux:navlist.item icon="globe-alt" :href="route('admin.seo.global-config')" :current="request()->routeIs('admin.seo.global-config')">
+                    Configuración Global
+                </flux:navlist.item>
+                <flux:navlist.item icon="document-text" :href="route('admin.seo.page-settings')" :current="request()->routeIs('admin.seo.page-settings')">
+                    SEO por Página
+                </flux:navlist.item>
+            </flux:navlist.group>
+        @endcan
     </flux:navlist>
 
     <flux:spacer/>

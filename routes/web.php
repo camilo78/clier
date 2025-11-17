@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'index'])->name('contact');
 
+// Public SEO routes
+Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
+Route::get('/robots.txt', [\App\Http\Controllers\RobotsTxtController::class, 'index'])->name('robots');
+
 Route::middleware(['auth'])->group(function (): void {
     
     // Redirect /admin to admin index
@@ -48,6 +52,12 @@ Route::middleware(['auth'])->group(function (): void {
             Route::get('/testimonials/create', \App\Livewire\Admin\Cms\Testimonials\Create::class)->name('testimonials.create')->middleware('can:manage cms');
             Route::get('/testimonials/{testimonial}/edit', \App\Livewire\Admin\Cms\Testimonials\Edit::class)->name('testimonials.edit')->middleware('can:manage cms');
 
+        });
+
+        // SEO Routes
+        Route::prefix('seo')->as('seo.')->group(function (): void {
+            Route::get('/global-config', \App\Livewire\Admin\Seo\GlobalConfig\Index::class)->name('global-config')->middleware('can:manage cms');
+            Route::get('/page-settings', \App\Livewire\Admin\Seo\PageSettings\Index::class)->name('page-settings')->middleware('can:manage cms');
         });
     });
 });
