@@ -55,15 +55,15 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav mx-auto bg-light pe-4 py-3 py-lg-0">
-                    <a href="#inicio" class="nav-item nav-link active">Inicio</a>
-                    <a href="#nosotros" class="nav-item nav-link">Nosotros</a>
+                    <a href="{{ route('home') }}#inicio" class="nav-item nav-link">Inicio</a>
+                    <a href="{{ route('home') }}#nosotros" class="nav-item nav-link">Nosotros</a>
                     @if($companyInfo && $companyInfo->services_enabled)
-                        <a href="#servicios" class="nav-item nav-link">Nuestros Servicios</a>
+                        <a href="{{ route('home') }}#servicios" class="nav-item nav-link">Nuestros Servicios</a>
                     @endif
                     @if($companyInfo && $companyInfo->testimonials_enabled)
-                        <a href="#equipo" class="nav-item nav-link">Nuestro Equipo</a>
+                        <a href="{{ route('home') }}#equipo" class="nav-item nav-link">Nuestro Equipo</a>
                     @endif
-                    <a href="{{ route('contact') }}" class="nav-item nav-link">Contáctanos</a>
+                    <a href="{{ route('contact') }}" class="nav-item nav-link active">Contáctanos</a>
                 </div>
              @include('partials.social-links')
         </div>
