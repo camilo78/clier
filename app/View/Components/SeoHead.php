@@ -18,6 +18,9 @@ class SeoHead extends Component
     public $metaTags;
     public $structuredData;
     public $trackingScripts;
+    public $organizationData;
+    public $favicon;
+    public $brandColors;
 
     /**
      * Create a new component instance.
@@ -30,11 +33,20 @@ class SeoHead extends Component
         // Obtener meta tags
         $this->metaTags = $seoService->getMetaTags($this->page);
 
-        // Obtener datos estructurados
+        // Obtener datos estructurados de la página
         $this->structuredData = $seoService->getStructuredData($this->page);
+
+        // Obtener datos estructurados de la organización
+        $this->organizationData = $seoService->getOrganizationStructuredData();
 
         // Obtener scripts de seguimiento
         $this->trackingScripts = $seoService->getTrackingScripts();
+
+        // Obtener favicon
+        $this->favicon = $seoService->getSiteFavicon();
+
+        // Obtener colores de marca
+        $this->brandColors = $seoService->getBrandColors();
     }
 
     /**

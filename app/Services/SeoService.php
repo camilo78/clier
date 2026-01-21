@@ -191,4 +191,135 @@ class SeoService
     {
         return $this->globalConfig?->structured_data_enabled ?? false;
     }
+
+    /**
+     * Obtiene la URL del logo del sitio
+     *
+     * @return string|null
+     */
+    public function getSiteLogo(): ?string
+    {
+        return $this->getFullImageUrl($this->globalConfig?->site_logo);
+    }
+
+    /**
+     * Obtiene la URL del favicon del sitio
+     *
+     * @return string|null
+     */
+    public function getSiteFavicon(): ?string
+    {
+        return $this->getFullImageUrl($this->globalConfig?->site_favicon);
+    }
+
+    /**
+     * Obtiene los colores de marca
+     *
+     * @return array
+     */
+    public function getBrandColors(): array
+    {
+        return [
+            'primary' => $this->globalConfig?->primary_color,
+            'secondary' => $this->globalConfig?->secondary_color,
+        ];
+    }
+
+    /**
+     * Obtiene la información de contacto
+     *
+     * @return array
+     */
+    public function getContactInfo(): array
+    {
+        return [
+            'email' => $this->globalConfig?->contact_email,
+            'phone' => $this->globalConfig?->contact_phone,
+            'address' => $this->globalConfig?->contact_address,
+            'country' => $this->globalConfig?->country,
+        ];
+    }
+
+    /**
+     * Obtiene las URLs de redes sociales
+     *
+     * @return array
+     */
+    public function getSocialMedia(): array
+    {
+        return [
+            'facebook' => $this->globalConfig?->facebook_url,
+            'instagram' => $this->globalConfig?->instagram_url,
+            'twitter' => $this->globalConfig?->twitter_site,
+            'linkedin' => $this->globalConfig?->linkedin_url,
+            'youtube' => $this->globalConfig?->youtube_url,
+            'tiktok' => $this->globalConfig?->tiktok_url,
+            'whatsapp' => $this->globalConfig?->whatsapp_number,
+        ];
+    }
+
+    /**
+     * Genera los datos estructurados de la organización (JSON-LD)
+     *
+     * @return array|null
+     */
+    public function getOrganizationStructuredData(): ?array
+    {
+        if (!$this->globalConfig || !$this->globalConfig->structured_data_enabled) {
+            return null;
+        }
+
+        $data = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Organization',
+            'name' => $this->globalConfig->site_name ?? config('app.name'),
+        ];
+
+        if ($this->globalConfig->site_description) {
+            $data['description'] = $this->globalConfig->site_description;
+        }
+
+        if ($this->globalConfig->site_logo) {
+            $data['logo'] = $this->getSiteLogo();
+        }
+
+        if ($this->globalConfig->canonical_url_base) {
+            $data['url'] = $this->globalConfig->canonical_url_base;
+        }
+
+        if ($this->globalConfig->contact_email) {
+            $data['email'] = $this->globalConfig->contact_email;
+        }
+
+        if ($this->globalConfig->contact_phone) {
+            $data['telephone'] = $this->globalConfig->contact_phone;
+        }
+
+        if ($this->globalConfig->contact_address) {
+            $data['address'] = [
+                '@type' => 'PostalAddress',
+                'streetAddress' => $this->globalConfig->contact_address,
+                'addressCountry' => $this->globalConfig->country ?? 'HN',
+            ];
+        }
+
+        // Redes sociales
+        $socialLinks = array_filter([
+            $this->globalConfig->facebook_url,
+            $this->globalConfig->instagram_url,
+            $this->globalConfig->linkedin_url,
+            $this->globalConfig->youtube_url,
+            $this->globalConfig->tiktok_url,
+        ]);
+
+        if (!empty($socialLinks)) {
+            $data['sameAs'] = array_values($socialLinks);
+        }
+
+        if ($this->globalConfig->established_year) {
+            $data['foundingDate'] = $this->globalConfig->established_year;
+        }
+
+        return $data;
+    }
 }

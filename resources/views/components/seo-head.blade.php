@@ -19,6 +19,18 @@
     <link rel="canonical" href="{{ $metaTags['canonical'] }}">
 @endif
 
+{{-- Favicon --}}
+@if(!empty($favicon))
+    <link rel="icon" type="image/x-icon" href="{{ $favicon }}">
+    <link rel="shortcut icon" href="{{ $favicon }}">
+@endif
+
+{{-- Theme Color --}}
+@if(!empty($brandColors['primary']))
+    <meta name="theme-color" content="{{ $brandColors['primary'] }}">
+    <meta name="msapplication-TileColor" content="{{ $brandColors['primary'] }}">
+@endif
+
 {{-- Verificaciones de Motores de Búsqueda --}}
 @if(!empty($metaTags['google_site_verification']))
     <meta name="google-site-verification" content="{{ $metaTags['google_site_verification'] }}">
@@ -77,6 +89,13 @@
 @if(!empty($structuredData))
     <script type="application/ld+json">
         {!! json_encode($structuredData, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+    </script>
+@endif
+
+{{-- Datos Estructurados de la Organización --}}
+@if(!empty($organizationData))
+    <script type="application/ld+json">
+        {!! json_encode($organizationData, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
     </script>
 @endif
 

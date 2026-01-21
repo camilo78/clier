@@ -19,6 +19,7 @@ class Index extends Component
     public $pages;
     public $selectedPage;
     public $showModal = false;
+    public $isEditing = false;
 
     // Campos del formulario
     public $page_identifier;
@@ -51,19 +52,63 @@ class Index extends Component
         $this->pages = PageSeoSetting::orderBy('page_identifier')->get();
     }
 
+    public function create()
+    {
+        $this->reset([
+            'selectedPage',
+            'page_identifier',
+            'page_name',
+            'title',
+            'meta_description',
+            'meta_keywords',
+            'og_title',
+            'og_description',
+            'og_image',
+            'og_type',
+            'twitter_title',
+            'twitter_description',
+            'twitter_image',
+            'canonical_url',
+            'robots',
+            'newOgImage',
+            'newTwitterImage'
+        ]);
+        $this->is_active = true;
+        $this->og_type = 'website';
+        $this->isEditing = false;
+        $this->showModal = true;
+    }
+
     public function edit($pageId)
     {
         $this->selectedPage = PageSeoSetting::find($pageId);
 
         if ($this->selectedPage) {
             $this->fill($this->selectedPage->toArray());
+            $this->isEditing = true;
             $this->showModal = true;
+        }
+    }
+
+    public function delete($pageId)
+    {
+        $page = PageSeoSetting::find($pageId);
+
+        if ($page) {
+            $page->delete();
+            Cache::forget('sitemap_xml');
+            $this->loadPages();
+            $this->alert('success', 'Página SEO eliminada correctamente');
         }
     }
 
     public function save()
     {
-        $this->validate([
+        $rules = [
+            'page_identifier' => $this->isEditing
+                ? 'required|string|max:255|unique:page_seo_settings,page_identifier,' . $this->selectedPage->id
+                : 'required|string|max:255|unique:page_seo_settings,page_identifier',
+            'page_name' => 'required|string|max:255',
             'title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:500',
             'meta_keywords' => 'nullable|string',
@@ -76,13 +121,20 @@ class Index extends Component
             'robots' => 'nullable|string|max:255',
             'newOgImage' => 'nullable|image|max:2048|mimes:jpg,jpeg,png,webp',
             'newTwitterImage' => 'nullable|image|max:2048|mimes:jpg,jpeg,png,webp',
-        ], [
+        ];
+
+        $messages = [
+            'page_identifier.required' => 'El identificador de página es obligatorio',
+            'page_identifier.unique' => 'Ya existe una página con este identificador',
+            'page_name.required' => 'El nombre de la página es obligatorio',
             'canonical_url.regex' => 'La URL canónica debe pertenecer al dominio ' . parse_url(url('/'), PHP_URL_HOST),
             'newOgImage.image' => 'El archivo debe ser una imagen válida',
             'newOgImage.max' => 'La imagen no debe ser mayor a 2MB',
             'newTwitterImage.image' => 'El archivo debe ser una imagen válida',
             'newTwitterImage.max' => 'La imagen no debe ser mayor a 2MB',
-        ]);
+        ];
+
+        $this->validate($rules, $messages);
 
         // Procesar imágenes
         $ogImagePath = $this->og_image;
@@ -96,13 +148,15 @@ class Index extends Component
         }
 
         $data = [
+            'page_identifier' => $this->page_identifier,
+            'page_name' => $this->page_name,
             'title' => $this->title,
             'meta_description' => $this->meta_description,
             'meta_keywords' => $this->meta_keywords,
             'og_title' => $this->og_title,
             'og_description' => $this->og_description,
             'og_image' => $ogImagePath,
-            'og_type' => $this->og_type,
+            'og_type' => $this->og_type ?? 'website',
             'twitter_title' => $this->twitter_title,
             'twitter_description' => $this->twitter_description,
             'twitter_image' => $twitterImagePath,
@@ -112,16 +166,23 @@ class Index extends Component
         ];
 
         if ($this->selectedPage) {
+            // Actualizar
             $this->selectedPage->update($data);
-
-            // Invalidar cache del sitemap cuando se actualiza una página
-            Cache::forget('sitemap_xml');
+            $message = 'SEO de página actualizado correctamente';
+        } else {
+            // Crear
+            PageSeoSetting::create($data);
+            $message = 'Página SEO creada correctamente';
         }
+
+        // Invalidar cache del sitemap
+        Cache::forget('sitemap_xml');
 
         $this->loadPages();
         $this->showModal = false;
-        $this->reset(['newOgImage', 'newTwitterImage']);
-        $this->alert('success', 'SEO de página actualizado correctamente');
+        $this->reset(['newOgImage', 'newTwitterImage', 'selectedPage']);
+        $this->isEditing = false;
+        $this->alert('success', $message);
     }
 
     public function closeModal()
@@ -147,6 +208,8 @@ class Index extends Component
             'newTwitterImage'
         ]);
         $this->is_active = true;
+        $this->isEditing = false;
+        $this->resetValidation();
     }
 
     #[Layout('components.layouts.admin')]

@@ -1,10 +1,18 @@
 {{-- Gestión de SEO por página --}}
 <section class="w-full">
     {{-- Encabezado --}}
-    <x-page-heading>
-        <x-slot:title>SEO por Página</x-slot:title>
-        <x-slot:subtitle>Configura el SEO específico de cada página de tu sitio</x-slot:subtitle>
-    </x-page-heading>
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <h1 class="text-2xl font-bold text-zinc-900 dark:text-white">SEO por Página</h1>
+            <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Configura el SEO específico de cada página de tu sitio</p>
+        </div>
+        <flux:button wire:click="create" variant="primary">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            Nueva Página
+        </flux:button>
+    </div>
 
     {{-- Tabla de páginas --}}
     <div class="bg-white dark:bg-zinc-900 shadow ring-1 ring-zinc-950/5 dark:ring-white/10 rounded-xl overflow-hidden">
@@ -51,9 +59,22 @@
                             </td>
                             {{-- Acciones --}}
                             <td class="px-6 py-4 whitespace-nowrap text-center">
-                                <flux:button wire:click="edit({{ $page->id }})" size="sm">
-                                    Editar
-                                </flux:button>
+                                <div class="flex items-center justify-center gap-2">
+                                    <flux:button wire:click="edit({{ $page->id }})" size="sm" variant="ghost">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                        </svg>
+                                    </flux:button>
+                                    <flux:button
+                                        wire:click="delete({{ $page->id }})"
+                                        wire:confirm="¿Estás seguro de eliminar esta página SEO?"
+                                        size="sm"
+                                        variant="danger">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                        </svg>
+                                    </flux:button>
+                                </div>
                             </td>
                         </tr>
                     @empty
@@ -78,10 +99,10 @@
                 <div class="flex items-center justify-between px-6 py-4 border-b border-zinc-200 dark:border-zinc-800">
                     <div>
                         <h3 class="text-xl font-semibold text-zinc-900 dark:text-white">
-                            Editar SEO: {{ $page_name }}
+                            {{ $isEditing ? 'Editar SEO: ' . $page_name : 'Nueva Página SEO' }}
                         </h3>
                         <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-                            Configura los meta tags y configuración SEO de esta página
+                            {{ $isEditing ? 'Configura los meta tags y configuración SEO de esta página' : 'Crea una nueva configuración SEO para una página' }}
                         </p>
                     </div>
                     <button type="button"
@@ -96,6 +117,29 @@
                 {{-- Contenido scrolleable --}}
                 <form wire:submit="save" class="flex-1 flex flex-col overflow-hidden">
                     <div class="flex-1 overflow-y-auto px-6 py-6 space-y-8">
+
+                        {{-- Información de la Página --}}
+                        <div>
+                            <h4 class="text-base font-semibold text-zinc-900 dark:text-white border-b border-zinc-200 dark:border-zinc-800 pb-2 mb-4">
+                                Información de la Página
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <flux:input
+                                    wire:model="page_identifier"
+                                    label="Identificador de Página *"
+                                    placeholder="home, about, contact, etc."
+                                    :disabled="$isEditing"
+                                    required />
+                                @error('page_identifier') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
+
+                                <flux:input
+                                    wire:model="page_name"
+                                    label="Nombre de la Página *"
+                                    placeholder="Página de Inicio"
+                                    required />
+                                @error('page_name') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
 
                         {{-- Meta Tags Básicos --}}
                         <div>
