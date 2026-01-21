@@ -115,7 +115,7 @@
                 @if ($companyInfo)
                     <h1 class="m-0"><img class="img-fluid me-3"
                             src="{{ $companyInfo->logo ? (str_starts_with($companyInfo->logo, 'img/') ? asset($companyInfo->logo) : asset('storage/' . $companyInfo->logo)) : asset('img/logo.png') }}"
-                            alt="">HOla mundo</h1>
+                            alt=""></h1>
                 @else
                     <h1 class="m-0"><img class="img-fluid me-3" src="{{ asset('img/logo.png') }}" alt="">AirCon</h1>
                 @endif
@@ -272,25 +272,29 @@
                         <div class="row g-5">
                             <div class="col-sm-6 col-lg-3 wow fadeIn text-center" data-wow-delay="0.1s">
                                 <h1 class="display-4 text-white" data-toggle="counter-up">
-                                    {{ $companyInfo->facts_clients_count ?? '1234' }}</h1>
+                                    {{ $companyInfo->facts_clients_count ?? '1234' }}
+                                </h1>
                                 <span
                                     class="text-primary">{{ $companyInfo->facts_clients_label ?? 'Clientes Satisfechos' }}</span>
                             </div>
                             <div class="col-sm-6 col-lg-3 wow fadeIn text-center" data-wow-delay="0.3s">
                                 <h1 class="display-4 text-white" data-toggle="counter-up">
-                                    {{ $companyInfo->facts_projects_count ?? '567' }}</h1>
+                                    {{ $companyInfo->facts_projects_count ?? '567' }}
+                                </h1>
                                 <span
                                     class="text-primary">{{ $companyInfo->facts_projects_label ?? 'Proyectos Completados' }}</span>
                             </div>
                             <div class="col-sm-6 col-lg-3 wow fadeIn text-center" data-wow-delay="0.5s">
                                 <h1 class="display-4 text-white" data-toggle="counter-up">
-                                    {{ $companyInfo->facts_experts_count ?? '89' }}</h1>
+                                    {{ $companyInfo->facts_experts_count ?? '89' }}
+                                </h1>
                                 <span
                                     class="text-primary">{{ $companyInfo->facts_experts_label ?? 'Técnicos Expertos' }}</span>
                             </div>
                             <div class="col-sm-6 col-lg-3 wow fadeIn text-center" data-wow-delay="0.7s">
                                 <h1 class="display-4 text-white" data-toggle="counter-up">
-                                    {{ $companyInfo->facts_support_count ?? '24' }}</h1>
+                                    {{ $companyInfo->facts_support_count ?? '24' }}
+                                </h1>
                                 <span class="text-primary">{{ $companyInfo->facts_support_label ?? 'Soporte 24/7' }}</span>
                             </div>
                         </div>
@@ -410,7 +414,8 @@
                             data-image-src="{{ $companyInfo->quote_bg_image_1 ? (str_starts_with($companyInfo->quote_bg_image_1, 'img/') ? asset($companyInfo->quote_bg_image_1) : asset('storage/' . $companyInfo->quote_bg_image_1)) : asset('img/carousel-1.jpg') }}">
                             <div class="h-100 px-4 px-sm-5 ps-lg-0 wow fadeIn" data-wow-delay="0.1s">
                                 <h1 class="text-white mb-4">
-                                    {{ $companyInfo->quote_title ?? 'Para Particulares y Organizaciones' }}</h1>
+                                    {{ $companyInfo->quote_title ?? 'Para Particulares y Organizaciones' }}
+                                </h1>
                                 <p class="text-light mb-5">
                                     {{ $companyInfo->quote_description ?? 'Ofrecemos servicios especializados tanto para hogares como para empresas, adaptándonos a las necesidades específicas de cada cliente con soluciones personalizadas.' }}
                                 </p>
@@ -502,7 +507,8 @@
                         <div class="container">
                             <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
                                 <h1 class="display-6 mb-5">
-                                    {{ $companyInfo->testimonials_title ?? 'Lo Que Dicen Sobre Nuestros Servicios' }}</h1>
+                                    {{ $companyInfo->testimonials_title ?? 'Lo Que Dicen Sobre Nuestros Servicios' }}
+                                </h1>
                             </div>
                             <div class="row g-5">
                                 <div class="col-lg-3 d-none d-lg-block">
