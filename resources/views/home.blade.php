@@ -583,19 +583,122 @@
                         const btnSpinner = document.getElementById('btnSpinner');
                         const messageDiv = document.getElementById('quoteFormMessage');
 
+                        // Validación del lado del cliente
+                        function validateForm() {
+                            let isValid = true;
+                            const fields = ['gname', 'gmail', 'cname', 'cage', 'message'];
+
+                            fields.forEach(fieldId => {
+                                const field = document.getElementById(fieldId);
+                                if (field && !field.value.trim()) {
+                                    isValid = false;
+                                    field.classList.add('is-invalid');
+                                } else if (field) {
+                                    field.classList.remove('is-invalid');
+                                }
+                            });
+
+                            // Validación de email específica
+                            const emailField = document.getElementById('gmail');
+                            if (emailField && emailField.value) {
+                                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                                if (!emailRegex.test(emailField.value)) {
+                                    emailField.classList.add('is-invalid');
+                                    isValid = false;
+                                } else {
+                                    emailField.classList.remove('is-invalid');
+                                }
+                            }
+
+                            return isValid;
+                        }
+
+                        // Remover clase is-invalid al escribir
+                        ['gname', 'gmail', 'cname', 'cage', 'message'].forEach(fieldId => {
+                            const field = document.getElementById(fieldId);
+                            if (field) {
+                                field.addEventListener('input', function() {
+                                    this.classList.remove('is-invalid');
+                                });
+                            }
+                        });
+
+                        // Mostrar mensaje en el div
+                        function showMessage(type, message, autoHide = true) {
+                            const iconClass = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle';
+                            const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+
+                            messageDiv.innerHTML = `
+                                <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
+                                    <i class="fa ${iconClass} me-2"></i>${message}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            `;
+
+                            // Scroll suave al mensaje
+                            messageDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                            // Auto-ocultar mensaje de éxito después de 8 segundos
+                            if (autoHide && type === 'success') {
+                                setTimeout(() => {
+                                    const alert = messageDiv.querySelector('.alert');
+                                    if (alert) {
+                                        const bsAlert = new bootstrap.Alert(alert);
+                                        bsAlert.close();
+                                    }
+                                }, 8000);
+                            }
+                        }
+
+                        // Mostrar errores de validación
+                        function showValidationErrors(errors) {
+                            let errorMessages = '<ul class="mb-0 ps-3">';
+                            for (const [field, messages] of Object.entries(errors)) {
+                                messages.forEach(msg => {
+                                    errorMessages += `<li>${msg}</li>`;
+                                });
+                            }
+                            errorMessages += '</ul>';
+
+                            messageDiv.innerHTML = `
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <i class="fa fa-exclamation-triangle me-2"></i>
+                                    <strong>Por favor, corrige los siguientes errores:</strong>
+                                    ${errorMessages}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            `;
+
+                            messageDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }
+
+                        // Resetear estado del botón
+                        function resetButtonState() {
+                            submitBtn.disabled = false;
+                            btnText.classList.remove('d-none');
+                            btnSpinner.classList.add('d-none');
+                        }
+
+                        // Manejador del envío del formulario
                         quoteForm.addEventListener('submit', function (e) {
                             e.preventDefault();
 
-                            // Show loading state
+                            // Validar formulario antes de enviar
+                            if (!validateForm()) {
+                                showMessage('error', 'Por favor, completa todos los campos correctamente.', false);
+                                return;
+                            }
+
+                            // Mostrar estado de carga
                             submitBtn.disabled = true;
                             btnText.classList.add('d-none');
                             btnSpinner.classList.remove('d-none');
                             messageDiv.innerHTML = '';
 
-                            // Collect form data
+                            // Recopilar datos del formulario
                             const formData = new FormData(quoteForm);
 
-                            // Send AJAX request
+                            // Enviar petición AJAX
                             fetch('{{ route("quote.send") }}', {
                                 method: 'POST',
                                 body: formData,
@@ -604,59 +707,47 @@
                                     'Accept': 'application/json'
                                 }
                             })
-                                .then(response => response.json())
-                                .then(data => {
-                                    // Hide loading state
-                                    submitBtn.disabled = false;
-                                    btnText.classList.remove('d-none');
-                                    btnSpinner.classList.add('d-none');
+                            .then(async response => {
+                                const data = await response.json();
 
-                                    if (data.success) {
-                                        // Show success message
-                                        messageDiv.innerHTML = `
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                            <i class="fa fa-check-circle me-2"></i>${data.message}
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                                        </div>
-                                    `;
+                                // Resetear estado del botón
+                                resetButtonState();
 
-                                        // Reset form
-                                        quoteForm.reset();
-
-                                        // Auto-hide success message after 5 seconds
-                                        setTimeout(() => {
-                                            const alert = messageDiv.querySelector('.alert');
-                                            if (alert) {
-                                                const bsAlert = new bootstrap.Alert(alert);
-                                                bsAlert.close();
-                                            }
-                                        }, 5000);
+                                // Manejar respuesta según status code
+                                if (response.ok) {
+                                    // Éxito (200-299)
+                                    showMessage('success', data.message);
+                                    quoteForm.reset();
+                                } else if (response.status === 422) {
+                                    // Errores de validación
+                                    if (data.errors) {
+                                        showValidationErrors(data.errors);
                                     } else {
-                                        // Show error message
-                                        messageDiv.innerHTML = `
-                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                            <i class="fa fa-exclamation-triangle me-2"></i>${data.message || 'Ocurrió un error al enviar el formulario.'}
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                                        </div>
-                                    `;
+                                        showMessage('error', data.message || 'Error de validación.', false);
                                     }
-                                })
-                                .catch(error => {
-                                    console.error('Error:', error);
+                                } else if (response.status === 429) {
+                                    // Rate limiting
+                                    showMessage('error', data.message || 'Demasiadas solicitudes. Por favor, espera unos minutos.', false);
+                                } else {
+                                    // Otros errores del servidor
+                                    showMessage('error', data.message || 'Ocurrió un error al enviar el formulario.', false);
+                                }
 
-                                    // Hide loading state
-                                    submitBtn.disabled = false;
-                                    btnText.classList.remove('d-none');
-                                    btnSpinner.classList.add('d-none');
+                                return data;
+                            })
+                            .catch(error => {
+                                console.error('Error de red:', error);
+                                resetButtonState();
+                                showMessage('error', 'Error de conexión. Por favor, verifica tu conexión a internet e intenta nuevamente.', false);
+                            });
+                        });
 
-                                    // Show error message
-                                    messageDiv.innerHTML = `
-                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                        <i class="fa fa-exclamation-triangle me-2"></i>Error de conexión. Por favor, intente nuevamente.
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                                    </div>
-                                `;
-                                });
+                        // Prevenir múltiples envíos accidentales
+                        quoteForm.addEventListener('keypress', function(e) {
+                            if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+                                e.preventDefault();
+                                return false;
+                            }
                         });
                     });
                 </script>

@@ -113,4 +113,30 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Quote Request Email Settings
+    |--------------------------------------------------------------------------
+    |
+    | Configuración específica para el módulo de cotizaciones.
+    | Aquí puedes personalizar los mensajes y el comportamiento del sistema.
+    |
+    */
+
+    'send_customer_confirmation' => env('MAIL_SEND_CUSTOMER_CONFIRMATION', true),
+    'success_message' => env('MAIL_SUCCESS_MESSAGE', 'Su solicitud ha sido enviada correctamente. Nos pondremos en contacto pronto.'),
+    'error_message' => env('MAIL_ERROR_MESSAGE', 'Hubo un error al enviar su solicitud. Por favor, inténtelo nuevamente o contáctenos directamente.'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Email Encryption
+    |--------------------------------------------------------------------------
+    |
+    | Encryption protocol to use when connecting to the SMTP server.
+    | Supported: "tls", "ssl"
+    |
+    */
+
+    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+
 ];
